@@ -1,0 +1,13 @@
+<?php
+	if(isset($this->redirect)){
+		echo "<script>"; 
+		echo "window.location.href ='".$this->redirect."'";
+		echo "</script>";
+	}
+	else{
+		echo '<div class="alert alert-success">'.$this->message.'</div>';
+		echo "<script>";
+		echo "setTimeout(function(){ window.location = '/'; }, 3000);";
+		echo "</script>";
+	}
+?>

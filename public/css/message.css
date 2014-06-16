@@ -1,0 +1,40 @@
+@CHARSET "ISO-8859-1";
+
+div .message{
+	width:100%;
+	border-bottom-style:solid;
+	border-width:1px;
+}
+
+div .message-type{
+	display:inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+	width:32px;
+	height:32px;
+}
+
+div .message-text{
+	display:inline-block;
+	vertical-align: middle;
+	padding:20px;
+	width:60%;
+	min-width:560px;
+}
+
+div .message-user{
+	display:inline-block;
+	font-style:italic;
+	width: 15%;
+	vertical-align: middle;
+}
+
+div .message-date{
+	display:inline-block;
+	font-weight:bold;
+	vertical-align: middle;
+}
+
+.count{
+	font-weight:bold;
+}

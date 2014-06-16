@@ -1,0 +1,26 @@
+<?php
+
+return array(
+		'Facebook\\FacebookAuthorizationException' => __DIR__ . '/../../vendor/Facebook/FacebookAuthorizationException.php',
+		'Facebook\\FacebookCanvasLoginHelper' => __DIR__ . '/../../vendor/Facebook/FacebookCanvasLoginHelper.php',
+		'Facebook\\FacebookClientException' => __DIR__ . '/../../vendor/Facebook/FacebookClientException.php',
+		'Facebook\\FacebookCurl' => __DIR__ . '/../../vendor/Facebook/FacebookCurl.php',
+		'Facebook\\FacebookCurlHttpClient' => __DIR__ . '/../../vendor/Facebook/FacebookCurlHttpClient.php',
+		'Facebook\\FacebookHttpable' => __DIR__ . '/../../vendor/Facebook/FacebookHttpable.php',
+		'Facebook\\FacebookJavaScriptLoginHelper' => __DIR__ . '/../../vendor/Facebook/FacebookJavaScriptLoginHelper.php',
+		'Facebook\\FacebookOtherException' => __DIR__ . '/../../vendor/Facebook/FacebookOtherException.php',
+		'Facebook\\FacebookPermissionException' => __DIR__ . '/../../vendor/Facebook/FacebookPermissionException.php',
+		'Facebook\\FacebookRedirectLoginHelper' => __DIR__ . '/../../vendor/Facebook/FacebookRedirectLoginHelper.php',
+		'Facebook\\FacebookRequest' => __DIR__ . '/../../vendor/Facebook/FacebookRequest.php',
+		'Facebook\\FacebookRequestException' => __DIR__ . '/../../vendor/Facebook/FacebookRequestException.php',
+		'Facebook\\FacebookResponse' => __DIR__ . '/../../vendor/Facebook/FacebookResponse.php',
+		'Facebook\\FacebookSDKException' => __DIR__ . '/../../vendor/Facebook/FacebookSDKException.php',
+		'Facebook\\FacebookServerException' => __DIR__ . '/../../vendor/Facebook/FacebookServerException.php',
+		'Facebook\\FacebookSession' => __DIR__ . '/../../vendor/Facebook/FacebookSession.php',
+		'Facebook\\FacebookThrottleException' => __DIR__ . '/../../vendor/Facebook/FacebookThrottleException.php',
+		'Facebook\\GraphAlbum' => __DIR__ . '/../../vendor/Facebook/GraphAlbum.php',
+		'Facebook\\GraphLocation' => __DIR__ . '/../../vendor/Facebook/GraphLocation.php',
+		'Facebook\\GraphObject' => __DIR__ . '/../../vendor/Facebook/GraphObject.php',
+		'Facebook\\GraphSessionInfo' => __DIR__ . '/../../vendor/Facebook/GraphSessionInfo.php',
+		'Facebook\\GraphUser' => __DIR__ . '/../../vendor/Facebook/GraphUser.php',
+	);
