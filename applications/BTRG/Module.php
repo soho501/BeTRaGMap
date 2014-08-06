@@ -33,7 +33,8 @@ class Module {
     	return array(
     		'invokables' => array(
     			'Fbscraper Service' => 'BTRG\Model\Service\FbscraperService',
-    				)
+    			'Crowfunder Service' => 'BTRG\Model\Service\CrowfunderService',	
+    			)
     	);
     }
 

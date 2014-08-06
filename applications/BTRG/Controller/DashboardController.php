@@ -18,15 +18,19 @@ class DashboardController extends AbstractActionController
 {
    
    	public function indexAction() {
-   		$fs = $this->getServiceLocator()->get('Fbscraper Service');
-   		if ($fs->logingfb()){
-   			$fs->getFbGroupUsers('181312585243017');
-   			echo "Done";
-   			return array("message" => "Done");
-   		}
-    	else {
-    		echo "Error!\n";
-    		return array("message" => "Ups.. facebook got you!");
-    	}
+   		$url = "http://www.crowdfunder.co.uk/cambrian-wildwood-project/";
+   		$cs = $this->getServiceLocator()->get('Crowfunder Service');
+   		$group = $cs->getGroupDetails($url);
+   		print_r($group);
+   		$owner = $cs->getGroupOwner($url);
+   		print_r($owner);
+   		//TODO $groupid = insertinDB($values);
+   		$backers = $cs->getGroupBakckers($url.'backers/',$owner);
+   		print_r($backers);
+   		// foeachbackers -> insertarbacker in DB, createlink group backer.
+   		// foreachbacker -> getbackerGroups(withrestrictions), insert link group backer.
+
+   		$message = "don't mind me";
+   		return array('message' => $message);
     }
 }

@@ -9,7 +9,9 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-            'BTRG\Controller\Dashboard' => 'BTRG\Controller\DashboardController',
+            'BTRG\Controller\Facebook' => 'BTRG\Controller\FacebookController',
+        	'BTRG\Controller\Dashboard' => 'BTRG\Controller\DashboardController',
+        	'BTRG\Controller\Crowfunder' => 'BTRG\Controller\CrowfunderController',
         ),
     ),
 
@@ -34,9 +36,18 @@ return array(
 				 	'routes' => array(
 				 			'facebook' => array(
 				 					'options' => array(
-				 							'route'    => 'facebook --fetgroupchusers',
+				 							'route'    => 'facebook --fetchgroupusers',
 				 							'defaults' => array(
-				 									'controller' =>  'BTRG\Controller\Dashboard',
+				 									'controller' =>  'BTRG\Controller\Facebook',
+				 									'action'     => 'index',
+				 							),
+				 					),
+				 			),
+				 			'growfunder' => array(
+				 					'options' => array(
+				 							'route'    => 'crowfunder --fetchgroupusers',
+				 							'defaults' => array(
+				 									'controller' =>  'BTRG\Controller\Crowfunder',
 				 									'action'     => 'index',
 				 							),
 				 					),
