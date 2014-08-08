@@ -99,6 +99,35 @@ class CrowfunderService extends \Common\Model\ServiceLocatorAware
 		return $values;
 	}
 	
+	public function getBackerGroups($backerurl){
+		$html = $this->__gethtml("http://www.crowdfunder.co.uk/".$backerurl);
+		$groups = array();
+		$dom = new \DOMDocument;
+		@$dom->loadHTML($html);
+		
+		$divs = $dom->getElementsByTagName('div');
+		foreach($divs as $div){
+			$class = $div->getAttribute('id');
+			if (preg_match('/project(.*)/', $class, $matches)){
+				$as = $div->getElementsByTagName('a');
+				foreach($as as $a){
+					$class = $a->getAttribute('class');
+					if (preg_match('/project-thumb/', $class, $matches)){
+						$values["NAME"] = str_replace(">","",$a->getAttribute('title'));
+						$url = $a->getAttribute('href');
+						$values["URL"] = str_replace("?","",$url);
+						$groups[] = $values;
+					}
+				}
+			}
+		}
+		return $groups;
+	}
+	
+	public function checkValidGroup($group){
+		return true;
+	}
+	
 	public function __gethtml($url){
 		$config = $this->getServiceLocator()->get('Config');
 		

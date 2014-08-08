@@ -21,14 +21,58 @@ class DashboardController extends AbstractActionController
    		$url = "http://www.crowdfunder.co.uk/cambrian-wildwood-project/";
    		$cs = $this->getServiceLocator()->get('Crowfunder Service');
    		$group = $cs->getGroupDetails($url);
-   		print_r($group);
    		$owner = $cs->getGroupOwner($url);
-   		print_r($owner);
-   		//TODO $groupid = insertinDB($values);
+   		$gm = $this->getServiceLocator()->get('BTRG\Model\Mapper\GroupMapper');
+   		$bm = $this->getServiceLocator()->get('BTRG\Model\Mapper\BackerMapper');
+   		$bgm = $this->getServiceLocator()->get('BTRG\Model\Mapper\BackerGroupMapper');
+   		
+   		$gresult = $gm->getGroupByUrl($group["URL"]);
+   		
+   		if($gresult == null){
+   			$groupid = $gm->addGroup($group);
+   		}else{
+   			$groupid = $gresult->ID;
+   		}
+   		
    		$backers = $cs->getGroupBakckers($url.'backers/',$owner);
-   		print_r($backers);
-   		// foeachbackers -> insertarbacker in DB, createlink group backer.
-   		// foreachbacker -> getbackerGroups(withrestrictions), insert link group backer.
+   		
+   		foreach($backers as $backer){
+   			
+   			$bresult = $bm->getBackerByName($backer["NAME"]);
+   			if($bresult == null){
+   				$backerid = $bm->addBacker($backer);
+   			}else{
+   				$backerid = $bresult->ID;
+   			}
+   			
+   			$backeridgroupid = array("BACKERID" => $backerid, "GROUPID" => $groupid);
+   			$bgm->addBackerGroup($backeridgroupid);
+   			echo $backer["NAME"]." - ".$group["NAME"]."<br>";
+   			$backergroups = $cs->getBackerGroups($backer["URL"]);
+   			
+   			foreach($backergroups as $backergroup){
+   				$group = $cs->getGroupDetails($backergroup["URL"]);
+   				//check group restrictionss
+   				if ($cs->checkValidGroup($group)){
+   					//check that group doesn't exist
+   					$gresult = $gm->getGroupByUrl($backergroup["URL"]);
+   					if ($gresult == null){
+   						//we add the new group to the db
+   						$ngroupid = $gm->addGroup($group);
+   					}else{
+   						$ngroupid = $gresult->ID;
+   					}
+   					//chect if that relation exists
+   					$gbresult = $bgm->getRelationID($ngroupid,$backerid);
+   					if ($gbresult == null) {
+   						//we add the new relation to the db
+   						$backeridgroupid = array("BACKERID" => $backerid, "GROUPID" => $ngroupid);
+   						$bgm->addBackerGroup($backeridgroupid);
+   					}
+   					//if it exists we don't do anything.
+   				}
+   			}
+   		}
 
    		$message = "don't mind me";
    		return array('message' => $message);
