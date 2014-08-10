@@ -67,4 +67,8 @@ class BackerGroupMapper extends AbstractTableGateway {
 		});
 		return $resultSet;
 	}
+	
+	public function deleteAll(){
+		$this->delete(array('ID > 0'));
+	}
 }

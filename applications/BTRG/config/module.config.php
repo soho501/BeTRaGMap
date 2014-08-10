@@ -45,7 +45,7 @@ return array(
 				 			),
 				 			'growfunder' => array(
 				 					'options' => array(
-				 							'route'    => 'crowfunder --fetchgroupusers',
+				 							'route'    => 'crowfunder --fetchgroupusers [--filter] [<url>]',
 				 							'defaults' => array(
 				 									'controller' =>  'BTRG\Controller\Crowfunder',
 				 									'action'     => 'index',

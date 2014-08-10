@@ -47,7 +47,7 @@ class DashboardController extends AbstractActionController
    			
    			$backeridgroupid = array("BACKERID" => $backerid, "GROUPID" => $groupid);
    			$bgm->addBackerGroup($backeridgroupid);
-   			echo $backer["NAME"]." - ".$group["NAME"]."<br>";
+   			
    			$backergroups = $cs->getBackerGroups($backer["URL"]);
    			
    			foreach($backergroups as $backergroup){

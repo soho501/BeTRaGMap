@@ -6,7 +6,8 @@ use \Exception;
 
 class CrowfunderService extends \Common\Model\ServiceLocatorAware
 {
-	private static $_fburl = 'http://www.crowdfunder.co.uk/';
+	private static $_cburl = 'http://www.crowdfunder.co.uk/';
+	private static $_badwords = array('Community Interest company', 'CIC', 'Foundation', 'Charity', 'Social enterprise', 'Cooperative', 'Co-op', 'Co-operative');
 	
 	
 	private function __initialize() {
@@ -22,13 +23,38 @@ class CrowfunderService extends \Common\Model\ServiceLocatorAware
 		$h1s = $dom->getElementsByTagName('h1');
 		$h1 = $h1s->item(0);
 		$as = $h1->getElementsByTagName('a');
+		
+		if ($as->length == 0){
+			//This is a page not found or a deleted group
+			return null;
+		}
 		$a = $as->item(0);
 		$values["NAME"] = $a->nodeValue;
 		$values["URL"] = $groupurl;
-		
+		$values["FUNDEDDATE"] = '0000-00-00 00:00:00';
+		$values["DESCRIPTION"] = "";
 		$divs = $dom->getElementsByTagName('div');
 		foreach($divs as $div){
 			$class = $div->getAttribute('class');
+			
+			if (preg_match('/status-funded/', $class, $matches)){
+				 if(preg_match('/(\w{3}\s\d{2},\s\d{4})/', $div->nodeValue, $datematch)){
+				 	$date = new \DateTime($datematch[1]);
+				 	$values["FUNDEDDATE"] = $date->format('Y-m-d H:i:s');
+				 }else{
+				 	$values["FUNDEDDATE"] = '0000-00-00 00:00:00';
+				 }
+			}
+			
+			if (preg_match('/project-body/', $class, $matches)){
+				$ps = $div->getElementsByTagName('p');
+				
+				foreach ($ps as $p){
+					$values["DESCRIPTION"] .= $p->nodeValue;
+				}
+				
+			}
+			
 			if (preg_match('/item tgts/', $class, $matches)){
 					$item_tags = $div->getElementsByTagName('span');
 					foreach($item_tags as $item){
@@ -125,7 +151,26 @@ class CrowfunderService extends \Common\Model\ServiceLocatorAware
 	}
 	
 	public function checkValidGroup($group){
-		return true;
+		$valid = true;
+		if ($group["TARGET"] > $group["RAISED"]){
+			$valid = false;
+		}
+		$now = new \DateTime();
+		$currentyear = $now->format("Y");
+		$fundeddate = new \DateTime($group["FUNDEDDATE"]);
+		$fundedyear = $fundeddate->format("Y");
+		$fundedyear += 2;
+		if ($fundedyear < $currentyear){
+			$valid = false;
+		}
+		
+		foreach(self::$_badwords as $badword){
+			if (preg_match('/'.$badword.'/', $group["DESCRIPTION"], $matches)){
+				$valid = false;
+			}
+		}
+		
+		return $valid;
 	}
 	
 	public function __gethtml($url){

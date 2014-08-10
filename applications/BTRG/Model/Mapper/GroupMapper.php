@@ -57,10 +57,26 @@ class GroupMapper extends AbstractTableGateway {
 		return $resultSet->current();
 	}
 	
+	public function getNonEqual($id){
+		$select = new Select($this->table);
+		$select->where(array("ID != '".$id."'"));
+	
+		$resultSet = $this->selectWith($select);
+	
+		if($resultSet->count() < 1){
+			return null;
+		}
+		return $resultSet;
+	}
+	
 	public function getAll(){
 		$resultSet = $this->select(function (Select $select) {
 			$select->order('ID ASC');
 		});
 		return $resultSet;
+	}
+	
+	public function deleteAll(){
+		$this->delete(array('ID > 0'));
 	}
 }
