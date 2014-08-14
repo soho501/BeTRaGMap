@@ -39,7 +39,8 @@ class CrowfunderService extends \Common\Model\ServiceLocatorAware
 			
 			if (preg_match('/status-funded/', $class, $matches)){
 				 if(preg_match('/(\w{3}\s\d{2},\s\d{4})/', $div->nodeValue, $datematch)){
-				 	$date = new \DateTime($datematch[1]);
+				 	$timezone = new \DateTimeZone('Europe/Berlin');
+				 	$date = new \DateTime($datematch[1],$timezone);
 				 	$values["FUNDEDDATE"] = $date->format('Y-m-d H:i:s');
 				 }else{
 				 	$values["FUNDEDDATE"] = '0000-00-00 00:00:00';
